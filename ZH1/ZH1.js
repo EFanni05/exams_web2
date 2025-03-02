@@ -18,6 +18,19 @@ function ShowXML(xml) {
     }
 }
 
+function ShowJson(json){
+    let obj = JSON.parse(json)
+    console.log(obj)
+    //parse json and show it
+}
+
+function ShowCSV(csv){
+    let lines = csv.split('\n')
+    for(let i = 0; i < lines.length; i++){
+        console.log(lines[i])
+    }
+}
+
 function main(){
     //html event listeners
 }
