@@ -1,38 +1,43 @@
-function HttpRequest(url) {
+function HttpRequest() {
+    const url = "http://localhost/htdocs/adat.txt" //change it if you put it somewhere else !! 
     var fetch = new XMLHttpRequest()
     fetch.onreadystatechange = function() {
         if (fetch.readyState == 4 && fetch.status == 200) {
-            ShowXML(fetch.responseXML)
-            //not need to to do status based error handling and json parsing 
+            let array = fetch.responseText.split('\n')
+            ShowTxt(array)
         }
     }
-    //edit url if needed
     fetch.open('GET', url, true)
     fetch.send()
 }
 
-function ShowXML(xml) {
-    let x = xml.getElementsByTagName('placeholder') //dont forget to change the tag to what you want to show
-    for (let i = 0; i < x.length; i++) {
-        console.log(x[i].childNodes[0].nodeValue) // dont forget to change to what ever htlm tag you want to show
+function ShowTxt(txt){
+    const div = document.getElementById('output')
+    const p = document.createElement('p')
+    txt[0] = Short(txt[0])
+    txt[1] = Month(txt[1])
+    txt[txt.length-1] = Round(txt[txt.length-1])
+    for (let index = 0; index < txt.length; index++) {
+        p.innerText = txt[index]
+        div.appendChild(p)
     }
 }
 
-function ShowJson(json){
-    let obj = JSON.parse(json)
-    console.log(obj)
-    //parse json and show it
+function Month(month){
+    let date = Date.parse(month)
+    return date.getMonth()
 }
 
-function ShowCSV(csv){
-    let lines = csv.split('\n')
-    for(let i = 0; i < lines.length; i++){
-        console.log(lines[i])
-    }
+function Short(txt){
+    return txt.substring(0, 0) + "."
+}
+
+function Round(num){
+    return num + " " + Math.round(num)
 }
 
 function main(){
-    //html event listeners
+    document.getElementById("fetchBtn").addEventListener('click', HttpRequest)
 }
 
 document.addEventListener('DOMContentLoaded', main)
