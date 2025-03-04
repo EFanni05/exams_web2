@@ -29,9 +29,9 @@ function Month(month){
 }
 
 function Short(txt){
-    return txt.substring(0, 0) + "."
+    let name = txt.split(' ')
+    return name[0].substring(0, 0) + ". " + name[1] 
 }
-
 function Round(num){
     return num + " " + Math.round(num)
 }
